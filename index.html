@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عيادة الطبيب قرناش</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:"Tahoma","Arial",sans-serif;
+}
+
+:root{
+    --primary:#0f766e;
+    --primary-light:#ccfbf1;
+    --secondary:#0ea5e9;
+    --dark:#16323f;
+    --text:#334155;
+    --muted:#64748b;
+    --bg:#f4f8fa;
+    --white:#ffffff;
+    --border:#e2e8f0;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+    --success:#22c55e;
+    --shadow:0 8px 30px rgba(15,118,110,.08);
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+    border:0;
+}
+
+/* Layout */
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:260px;
+    background:linear-gradient(180deg,#0f766e,#115e59);
+    color:white;
+    padding:25px 16px;
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+    z-index:100;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px;
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    background:rgba(255,255,255,.18);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+}
+
+.logo h1{
+    font-size:17px;
+    margin-bottom:4px;
+}
+
+.logo p{
+    font-size:11px;
+    opacity:.75;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.menu button{
+    width:100%;
+    background:transparent;
+    color:#d9fffa;
+    padding:13px 15px;
+    border-radius:12px;
+    text-align:right;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:.2s;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:rgba(255,255,255,.16);
+    color:white;
+}
+
+.menu-icon{
+    width:28px;
+    text-align:center;
+    font-size:18px;
+}
+
+.main{
+    width:calc(100% - 260px);
+    margin-right:260px;
+}
+
+.topbar{
+    height:75px;
+    background:white;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.page-title h2{
+    color:var(--dark);
+    font-size:20px;
+}
+
+.page-title span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.doctor{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#14b8a6,#0ea5e9);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.doctor-info strong{
+    display:block;
+    color:var(--dark);
+    font-size:13px;
+}
+
+.doctor-info span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.content{
+    padding:28px;
+}
+
+/* Cards */
+
+.welcome{
+    background:linear-gradient(135deg,#0f766e,#0891b2);
+    color:white;
+    padding:28px;
+    border-radius:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    box-shadow:var(--shadow);
+}
+
+.welcome h2{
+    font-size:24px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    opacity:.85;
+    font-size:13px;
+}
+
+.date-box{
+    background:rgba(255,255,255,.14);
+    padding:15px 20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.date-box strong{
+    display:block;
+    font-size:20px;
+}
+
+.date-box span{
+    font-size:11px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.03);
+}
+
+.stat-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.stat:nth-child(1) .stat-icon{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.stat:nth-child(2) .stat-icon{
+    background:#ccfbf1;
+    color:#0f766e;
+}
+
+.stat:nth-child(3) .stat-icon{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.stat:nth-child(4) .stat-icon{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.stat h3{
+    color:var(--dark);
+    font-size:24px;
+}
+
+.stat p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:4px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 4px 18px rgba(0,0,0,.03);
+}
+
+.card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.card-header h3{
+    color:var(--dark);
+    font-size:16px;
+}
+
+.card-header span{
+    font-size:11px;
+    color:var(--muted);
+}
+
+/* Appointment */
+
+.appointment{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid #eef2f5;
+}
+
+.appointment:last-child{
+    border-bottom:0;
+}
+
+.patient{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.patient-avatar{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:var(--primary-light);
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.patient strong{
+    font-size:13px;
+    display:block;
+    color:var(--dark);
+}
+
+.patient span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.time{
+    font-size:12px;
+    color:var(--primary);
+    font-weight:bold;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+}
+
+.badge.green{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.badge.orange{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+/* Pages */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-title h2{
+    color:var(--dark);
+    font-size:22px;
+}
+
+.btn{
+    padding:11px 17px;
+    border-radius:11px;
+    background:var(--primary);
+    color:white;
+    transition:.2s;
+}
+
+.btn:hover{
+    background:#115e59;
+}
+
+.btn.secondary{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+
+.btn.danger{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.search-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.search{
+    flex:1;
+    padding:12px 15px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    outline:none;
+    background:white;
+}
+
+.search:focus{
+    border-color:var(--primary);
+}
+
+/* Tables */
+
+.table-container{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th,td{
+    padding:15px;
+    text-align:right;
+    border-bottom:1px solid #eef2f5;
+    font-size:12px;
+}
+
+th{
+    background:#f8fafc;
+    color:var(--muted);
+    font-weight:bold;
+}
+
+td{
+    color:var(--text);
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.small-btn{
+    padding:7px 10px;
+    border-radius:8px;
+    background:#ecfeff;
+    color:#0e7490;
+    font-size:11px;
+}
+
+.small-btn.delete{
+    background:#fff1f2;
+    color:#be123c;
+}
+
+/* Forms */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    padding:11px 13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--primary);
+}
+
+.form-actions{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+/* Modal */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:500;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-content{
+    background:white;
+    width:min(650px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:22px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.modal-header h3{
+    color:var(--dark);
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    background:#f1f5f9;
+    color:#64748b;
+}
+
+/* Patient profile */
+
+.profile-header{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:20px;
+}
+
+.big-avatar{
+    width:70px;
+    height:70px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#0f766e,#0ea5e9);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.profile-info h2{
+    color:var(--dark);
+    margin-bottom:5px;
+}
+
+.profile-info p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.info-box{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+}
+
+.info-box span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.info-box strong{
+    display:block;
+    margin-top:6px;
+    color:var(--dark);
+}
+
+/* Mobile */
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1000px){
+    .sidebar{
+        transform:translateX(100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        width:100%;
+        margin-right:0;
+    }
+
+    .mobile-menu{
+        display:block;
+        background:transparent;
+        font-size:22px;
+        color:var(--dark);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+    .content{
+        padding:16px;
+    }
+
+    .topbar{
+        padding:0 16px;
+    }
+
+    .doctor-info{
+        display:none;
+    }
+
+    .welcome{
+        padding:20px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .welcome h2{
+        font-size:19px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">⚕</div>
+        <div>
+            <h1>عيادة الطبيب قرناش</h1>
+            <p>طبيب عام</p>
+        </div>
+    </div>
+
+    <nav class="menu">
+
+        <button class="active" onclick="showPage('dashboard',this)">
+            <span class="menu-icon">⌂</span>
+            الرئيسية
+        </button>
+
+        <button onclick="showPage('patients',this)">
+            <span class="menu-icon">👥</span>
+            المرضى
+        </button>
+
+        <button onclick="showPage('appointments',this)">
+            <span class="menu-icon">📅</span>
+            المواعيد
+        </button>
+
+        <button onclick="showPage('consultation',this)">
+            <span class="menu-icon">🩺</span>
+            الاستشارة الطبية
+        </button>
+
+        <button onclick="showPage('prescriptions',this)">
+            <span class="menu-icon">💊</span>
+            الوصفات
+        </button>
+
+        <button onclick="showPage('tests',this)">
+            <span class="menu-icon">🧪</span>
+            التحاليل والأشعة
+        </button>
+
+        <button onclick="showPage('reports',this)">
+            <span class="menu-icon">📊</span>
+            التقارير
+        </button>
+
+        <button onclick="showPage('settings',this)">
+            <span class="menu-icon">⚙️</span>
+            الإعدادات
+        </button>
+
+    </nav>
+</aside>
+
+
+<!-- Main -->
+<main class="main">
+
+<header class="topbar">
+
+    <div style="display:flex;align-items:center;gap:15px">
+
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+        <div class="page-title">
+            <h2 id="pageTitle">لوحة التحكم</h2>
+            <span>إدارة العيادة والمرضى</span>
+        </div>
+
+    </div>
+
+    <div class="doctor">
+
+        <div class="doctor-info">
+            <strong>د. قرناش</strong>
+            <span>طبيب عام</span>
+        </div>
+
+        <div class="avatar">د</div>
+
+    </div>
+
+</header>
+
+
+<div class="content">
+
+<!-- Dashboard -->
+<section id="dashboard" class="page active">
+
+    <div class="welcome">
+
+        <div>
+            <h2>مرحباً د. قرناش 👋</h2>
+            <p>إليك ملخص نشاط العيادة لهذا اليوم.</p>
+        </div>
+
+        <div class="date-box">
+            <strong id="todayDate">--</strong>
+            <span>اليوم</span>
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div>
+                <h3 id="patientsCount">0</h3>
+                <p>إجمالي المرضى</p>
+            </div>
+            <div class="stat-icon">👥</div>
+        </div>
+
+        <div class="stat">
+            <div>
+                <h3 id="appointmentsCount">0</h3>
+                <p>مواعيد اليوم</p>
+            </div>
+            <div class="stat-icon">📅</div>
+        </div>
+
+        <div class="stat">
+            <div>
+                <h3 id="consultationsCount">0</h3>
+                <p>الاستشارات</p>
+            </div>
+            <div class="stat-icon">🩺</div>
+        </div>
+
+        <div class="stat">
+            <div>
+                <h3 id="prescriptionsCount">0</h3>
+                <p>الوصفات</p>
+            </div>
+            <div class="stat-icon">💊</div>
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>مواعيد اليوم</h3>
+                <span>آخر التحديثات</span>
+            </div>
+
+            <div id="dashboardAppointments"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>اختصارات سريعة</h3>
+            </div>
+
+            <div style="display:grid;gap:10px">
+
+                <button class="btn" onclick="openModal('patientModal')">
+                    + إضافة مريض جديد
+                </button>
+
+                <button class="btn secondary" onclick="openModal('appointmentModal')">
+                    📅 حجز موعد
+                </button>
+
+                <button class="btn secondary" onclick="showPageByName('consultation')">
+                    🩺 بدء استشارة
+                </button>
+
+                <button class="btn secondary" onclick="showPageByName('prescriptions')">
+                    💊 إنشاء وصفة
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Patients -->
+<section id="patients" class="page">
+
+    <div class="section-title">
+
+        <h2>المرضى</h2>
+
+        <button class="btn" onclick="openModal('patientModal')">
+            + إضافة مريض
+        </button>
+
+    </div>
+
+    <div class="search-row">
+        <input
+            class="search"
+            id="patientSearch"
+            placeholder="ابحث باسم المريض أو رقم الهاتف..."
+            oninput="renderPatients()">
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>المريض</th>
+                    <th>العمر</th>
+                    <th>الجنس</th>
+                    <th>الهاتف</th>
+                    <th>آخر زيارة</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+
+            <tbody id="patientsTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- Appointments -->
+<section id="appointments" class="page">
+
+    <div class="section-title">
+
+        <h2>المواعيد</h2>
+
+        <button class="btn" onclick="openModal('appointmentModal')">
+            + موعد جديد
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <div id="appointmentsList"></div>
+
+    </div>
+
+</section>
+
+
+<!-- Consultation -->
+<section id="consultation" class="page">
+
+    <div class="section-title">
+        <h2>الاستشارة الطبية</h2>
+    </div>
+
+    <div class="card">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>المريض</label>
+                <select id="consultPatient"></select>
+            </div>
+
+            <div class="form-group">
+                <label>تاريخ الاستشارة</label>
+                <input type="date" id="consultDate">
+            </div>
+
+            <div class="form-group">
+                <label>درجة الحرارة °C</label>
+                <input type="number" placeholder="مثال: 37.2">
+            </div>
+
+            <div class="form-group">
+                <label>ضغط الدم</label>
+                <input placeholder="مثال: 120/80">
+            </div>
+
+            <div class="form-group">
+                <label>الوزن kg</label>
+                <input type="number">
+            </div>
+
+            <div class="form-group">
+                <label>الطول cm</label>
+                <input type="number">
+            </div>
+
+            <div class="form-group full">
+                <label>الشكوى الرئيسية</label>
+                <textarea placeholder="اكتب شكوى المريض..."></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>الأعراض والفحص السريري</label>
+                <textarea placeholder="أدخل تفاصيل الفحص..."></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>التشخيص</label>
+                <textarea placeholder="التشخيص الطبي..."></textarea>
+            </div>
+
+            <div class="form-group full">
+                <label>الخطة العلاجية والملاحظات</label>
+                <textarea placeholder="العلاج والمتابعة..."></textarea>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button class="btn" onclick="saveConsultation()">
+                حفظ الاستشارة
+            </button>
+
+            <button class="btn secondary" onclick="window.print()">
+                🖨 طباعة
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Prescriptions -->
+<section id="prescriptions" class="page">
+
+    <div class="section-title">
+
+        <h2>الوصفات الطبية</h2>
+
+        <button class="btn" onclick="openModal('prescriptionModal')">
+            + وصفة جديدة
+        </button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>المريض</th>
+                    <th>التاريخ</th>
+                    <th>الأدوية</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
+
+            <tbody id="prescriptionsTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- Tests -->
+<section id="tests" class="page">
+
+    <div class="section-title">
+
+        <h2>التحاليل والأشعة</h2>
+
+        <button class="btn" onclick="openModal('testModal')">
+            + إضافة نتيجة
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <div id="testsList"></div>
+
+    </div>
+
+</section>
+
+
+<!-- Reports -->
+<section id="reports" class="page">
+
+    <div class="section-title">
+        <h2>التقارير والإحصائيات</h2>
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div>
+                <h3 id="reportPatients">0</h3>
+                <p>المرضى المسجلون</p>
+            </div>
+            <div class="stat-icon">👥</div>
+        </div>
+
+        <div class="stat">
+            <div>
+                <h3 id="reportConsultations">0</h3>
+                <p>الاستشارات</p>
+            </div>
+            <div class="stat-icon">🩺</div>
+        </div>
+
+        <div class="stat">
+            <div>
+                <h3 id="reportPrescriptions">0</h3>
+                <p>الوصفات</p>
+            </div>
+            <div class="stat-icon">💊</div>
+        </div>
+
+        <div class="stat">
+            <div>
+                <h3 id="reportTests">0</h3>
+                <p>التحاليل</p>
+            </div>
+            <div class="stat-icon">🧪</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Settings -->
+<section id="settings" class="page">
+
+    <div class="section-title">
+        <h2>إعدادات العيادة</h2>
+    </div>
+
+    <div class="card">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>اسم الطبيب</label>
+                <input value="د. قرناش">
+            </div>
+
+            <div class="form-group">
+                <label>التخصص</label>
+                <input value="طبيب عام">
+            </div>
+
+            <div class="form-group">
+                <label>اسم العيادة</label>
+                <input value="عيادة الطبيب قرناش">
+            </div>
+
+            <div class="form-group">
+                <label>رقم الهاتف</label>
+                <input placeholder="رقم الهاتف">
+            </div>
+
+            <div class="form-group full">
+                <label>عنوان العيادة</label>
+                <input placeholder="عنوان العيادة">
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button class="btn" onclick="saveSettings()">
+                حفظ الإعدادات
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+</main>
+</div>
+
+
+<!-- Patient Modal -->
+<div class="modal" id="patientModal">
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h3>إضافة مريض جديد</h3>
+        <button class="close" onclick="closeModal('patientModal')">✕</button>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>الاسم الكامل</label>
+            <input id="patientName" placeholder="اسم المريض">
+        </div>
+
+        <div class="form-group">
+            <label>العمر</label>
+            <input id="patientAge" type="number">
+        </div>
+
+        <div class="form-group">
+            <label>الجنس</label>
+            <select id="patientGender">
+                <option>ذكر</option>
+                <option>أنثى</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>رقم الهاتف</label>
+            <input id="patientPhone">
+        </div>
+
+        <div class="form-group full">
+            <label>ملاحظات / أمراض مزمنة / حساسية</label>
+            <textarea id="patientNotes"></textarea>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+
+        <button class="btn" onclick="addPatient()">
+            حفظ المريض
+        </button>
+
+        <button class="btn secondary" onclick="closeModal('patientModal')">
+            إلغاء
+        </button>
+
+    </div>
+
+</div>
+</div>
+
+
+<!-- Appointment Modal -->
+<div class="modal" id="appointmentModal">
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h3>حجز موعد</h3>
+        <button class="close" onclick="closeModal('appointmentModal')">✕</button>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>المريض</label>
+            <select id="appointmentPatient"></select>
+        </div>
+
+        <div class="form-group">
+            <label>التاريخ</label>
+            <input type="date" id="appointmentDate">
+        </div>
+
+        <div class="form-group">
+            <label>الوقت</label>
+            <input type="time" id="appointmentTime">
+        </div>
+
+        <div class="form-group">
+            <label>نوع الموعد</label>
+            <select id="appointmentType">
+                <option>استشارة عامة</option>
+                <option>متابعة</option>
+                <option>فحص</option>
+                <option>تطعيم</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button class="btn" onclick="addAppointment()">
+            حفظ الموعد
+        </button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- Prescription Modal -->
+<div class="modal" id="prescriptionModal">
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h3>وصفة طبية جديدة</h3>
+        <button class="close" onclick="closeModal('prescriptionModal')">✕</button>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>المريض</label>
+            <select id="prescriptionPatient"></select>
+        </div>
+
+        <div class="form-group">
+            <label>التاريخ</label>
+            <input type="date" id="prescriptionDate">
+        </div>
+
+        <div class="form-group full">
+            <label>الأدوية والتعليمات</label>
+            <textarea id="prescriptionMedicines"
+                placeholder="اسم الدواء - الجرعة - عدد المرات - مدة العلاج"></textarea>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button class="btn" onclick="addPrescription()">
+            حفظ الوصفة
+        </button>
+    </div>
+
+</div>
+</div>
+
+
+<!-- Test Modal -->
+<div class="modal" id="testModal">
+
+<div class="modal-content">
+
+    <div class="modal-header">
+        <h3>إضافة تحليل أو أشعة</h3>
+        <button class="close" onclick="closeModal('testModal')">✕</button>
+    </div>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>المريض</label>
+            <select id="testPatient"></select>
+        </div>
+
+        <div class="form-group">
+            <label>النوع</label>
+            <select id="testType">
+                <option>تحليل دم</option>
+                <option>تحليل بول</option>
+                <option>أشعة</option>
+                <option>تحاليل أخرى</option>
+            </select>
+        </div>
+
+        <div class="form-group full">
+            <label>النتيجة / الملاحظات</label>
+            <textarea id="testResult"></textarea>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <button class="btn" onclick="addTest()">
+            حفظ النتيجة
+        </button>
+    </div>
+
+</div>
+</div>
+
+
+<script>
+
+/* ==========================
+   DATA
+========================== */
+
+let patients =
+JSON.parse(localStorage.getItem("qarnaash_patients")) || [];
+
+let appointments =
+JSON.parse(localStorage.getItem("qarnaash_appointments")) || [];
+
+let prescriptions =
+JSON.parse(localStorage.getItem("qarnaash_prescriptions")) || [];
+
+let consultations =
+JSON.parse(localStorage.getItem("qarnaash_consultations")) || [];
+
+let tests =
+JSON.parse(localStorage.getItem("qarnaash_tests")) || [];
+
+
+/* ==========================
+   NAVIGATION
+========================== */
+
+const titles = {
+    dashboard:"لوحة التحكم",
+    patients:"المرضى",
+    appointments:"المواعيد",
+    consultation:"الاستشارة الطبية",
+    prescriptions:"الوصفات الطبية",
+    tests:"التحاليل والأشعة",
+    reports:"التقارير والإحصائيات",
+    settings:"إعدادات العيادة"
+};
+
+function showPage(page, button){
+
+    document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    document.getElementById(page)
+        .classList.add("active");
+
+    document.getElementById("pageTitle")
+        .textContent = titles[page];
+
+    document.querySelectorAll(".menu button")
+        .forEach(b => b.classList.remove("active"));
+
+    if(button) button.classList.add("active");
+
+    refreshAll();
+
+    document.getElementById("sidebar")
+        .classList.remove("open");
+}
+
+function showPageByName(page){
+
+    const button =
+        [...document.querySelectorAll(".menu button")]
+        .find(b => b.getAttribute("onclick")?.includes("'" + page + "'"));
+
+    showPage(page,button);
+}
+
+function toggleSidebar(){
+    document.getElementById("sidebar")
+        .classList.toggle("open");
+}
+
+
+/* ==========================
+   MODALS
+========================== */
+
+function openModal(id){
+
+    updatePatientSelects();
+
+    document.getElementById(id)
+        .classList.add("show");
+}
+
+function closeModal(id){
+    document.getElementById(id)
+        .classList.remove("show");
+}
+
+
+/* ==========================
+   PATIENTS
+========================== */
+
+function addPatient(){
+
+    const name =
+        document.getElementById("patientName").value.trim();
+
+    if(!name){
+        alert("يرجى إدخال اسم المريض");
+        return;
+    }
+
+    const patient = {
+        id:Date.now(),
+        name:name,
+        age:document.getElementById("patientAge").value,
+        gender:document.getElementById("patientGender").value,
+        phone:document.getElementById("patientPhone").value,
+        notes:document.getElementById("patientNotes").value,
+        lastVisit:"لم تتم الزيارة بعد"
+    };
+
+    patients.push(patient);
+
+    saveData();
+
+    document.getElementById("patientName").value="";
+    document.getElementById("patientAge").value="";
+    document.getElementById("patientPhone").value="";
+    document.getElementById("patientNotes").value="";
+
+    closeModal("patientModal");
+
+    refreshAll();
+
+    alert("تمت إضافة المريض بنجاح");
+}
+
+
+function renderPatients(){
+
+    const tbody =
+        document.getElementById("patientsTable");
+
+    const search =
+        document.getElementById("patientSearch")
+        .value.toLowerCase();
+
+    const filtered =
+        patients.filter(p =>
+            p.name.toLowerCase().includes(search) ||
+            p.phone.includes(search)
+        );
+
+    tbody.innerHTML="";
+
+    if(filtered.length===0){
+
+        tbody.innerHTML=`
+        <tr>
+            <td colspan="6" style="text-align:center;color:#94a3b8">
+                لا توجد بيانات
+            </td>
+        </tr>`;
+
+        return;
+    }
+
+    filtered.forEach(p=>{
+
+        const initial =
+            p.name.charAt(0);
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>
+                <div class="patient">
+                    <div class="patient-avatar">${initial}</div>
+
+                    <div>
+                        <strong>${escapeHTML(p.name)}</strong>
+                        <span>${escapeHTML(p.notes || "لا توجد ملاحظات")}</span>
+                    </div>
+                </div>
+            </td>
+
+            <td>${p.age || "-"}</td>
+
+            <td>${p.gender}</td>
+
+            <td>${p.phone || "-"}</td>
+
+            <td>${p.lastVisit}</td>
+
+            <td>
+
+                <div class="actions">
+
+                    <button class="small-btn"
+                        onclick="viewPatient(${p.id})">
+                        الملف
+                    </button>
+
+                    <button class="small-btn delete"
+                        onclick="deletePatient(${p.id})">
+                        حذف
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>`;
+    });
+}
+
+
+function deletePatient(id){
+
+    if(!confirm("هل تريد حذف هذا المريض؟"))
+        return;
+
+    patients =
+        patients.filter(p=>p.id!==id);
+
+    saveData();
+    refreshAll();
+}
+
+
+function viewPatient(id){
+
+    const p =
+        patients.find(x=>x.id===id);
+
+    if(!p) return;
+
+    alert(
+`ملف المريض
+
+الاسم: ${p.name}
+العمر: ${p.age || "-"}
+الجنس: ${p.gender}
+الهاتف: ${p.phone || "-"}
+الملاحظات: ${p.notes || "لا توجد"}`
+    );
+}
+
+
+/* ==========================
+   APPOINTMENTS
+========================== */
+
+function addAppointment(){
+
+    if(patients.length===0){
+        alert("أضف مريضاً أولاً");
+        return;
+    }
+
+    const patientId =
+        Number(document.getElementById("appointmentPatient").value);
+
+    const patient =
+        patients.find(p=>p.id===patientId);
+
+    const appointment = {
+
+        id:Date.now(),
+
+        patientId:patientId,
+
+        patientName:patient.name,
+
+        date:
+            document.getElementById("appointmentDate").value,
+
+        time:
+            document.getElementById("appointmentTime").value,
+
+        type:
+            document.getElementById("appointmentType").value,
+
+        status:"مؤكد"
+    };
+
+    appointments.push(appointment);
+
+    saveData();
+
+    closeModal("appointmentModal");
+
+    refreshAll();
+
+    alert("تم حجز الموعد بنجاح");
+}
+
+
+function renderAppointments(){
+
+    const container =
+        document.getElementById("appointmentsList");
+
+    container.innerHTML="";
+
+    if(appointments.length===0){
+
+        container.innerHTML=
+        `<p style="color:#94a3b8;text-align:center">
+            لا توجد مواعيد حالياً
+        </p>`;
+
+        return;
+    }
+
+    appointments
+        .sort((a,b)=>
+            (a.date+a.time).localeCompare(b.date+b.time)
+        )
+        .forEach(a=>{
+
+            container.innerHTML += `
+
+            <div class="appointment">
+
+                <div class="patient">
+
+                    <div class="patient-avatar">
+                        ${a.patientName.charAt(0)}
+                    </div>
+
+                    <div>
+                        <strong>${escapeHTML(a.patientName)}</strong>
+                        <span>${a.type} — ${a.date}</span>
+                    </div>
+
+                </div>
+
+                <div class="time">
+                    ${a.time}
+                </div>
+
+                <span class="badge green">
+                    ${a.status}
+                </span>
+
+            </div>`;
+        });
+}
+
+
+function renderDashboardAppointments(){
+
+    const container =
+        document.getElementById("dashboardAppointments");
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    const todayAppointments =
+        appointments.filter(a=>a.date===today);
+
+    container.innerHTML="";
+
+    if(todayAppointments.length===0){
+
+        container.innerHTML=
+        `<p style="color:#94a3b8;font-size:12px">
+            لا توجد مواعيد اليوم.
+        </p>`;
+
+        return;
+    }
+
+    todayAppointments.forEach(a=>{
+
+        container.innerHTML += `
+
+        <div class="appointment">
+
+            <div class="patient">
+
+                <div class="patient-avatar">
+                    ${a.patientName.charAt(0)}
+                </div>
+
+                <div>
+                    <strong>${escapeHTML(a.patientName)}</strong>
+                    <span>${a.type}</span>
+                </div>
+
+            </div>
+
+            <div class="time">
+                ${a.time}
+            </div>
+
+        </div>`;
+    });
+}
+
+
+/* ==========================
+   PRESCRIPTIONS
+========================== */
+
+function addPrescription(){
+
+    const patientId =
+        Number(document.getElementById("prescriptionPatient").value);
+
+    const patient =
+        patients.find(p=>p.id===patientId);
+
+    if(!patient){
+        alert("اختر المريض");
+        return;
+    }
+
+    const medicines =
+        document.getElementById("prescriptionMedicines")
+        .value.trim();
+
+    if(!medicines){
+        alert("أدخل الأدوية");
+        return;
+    }
+
+    prescriptions.push({
+
+        id:Date.now(),
+
+        patientId,
+
+        patientName:patient.name,
+
+        date:
+            document.getElementById("prescriptionDate").value
+            || new Date().toISOString().split("T")[0],
+
+        medicines
+    });
+
+    saveData();
+
+    closeModal("prescriptionModal");
+
+    refreshAll();
+
+    alert("تم حفظ الوصفة");
+}
+
+
+function renderPrescriptions(){
+
+    const tbody =
+        document.getElementById("prescriptionsTable");
+
+    tbody.innerHTML="";
+
+    prescriptions.forEach(p=>{
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>${escapeHTML(p.patientName)}</td>
+
+            <td>${p.date}</td>
+
+            <td style="white-space:pre-line">
+                ${escapeHTML(p.medicines)}
+            </td>
+
+            <td>
+                <button class="small-btn"
+                    onclick="printPrescription(${p.id})">
+                    🖨 طباعة
+                </button>
+            </td>
+
+        </tr>`;
+    });
+}
+
+
+function printPrescription(id){
+
+    const p =
+        prescriptions.find(x=>x.id===id);
+
+    if(!p) return;
+
+    const w =
+        window.open("","_blank");
+
+    w.document.write(`
+
+        <html dir="rtl">
+
+        <head>
+
+            <title>وصفة طبية</title>
+
+            <style>
+
+                body{
+                    font-family:Arial;
+                    padding:50px;
+                    direction:rtl;
+                }
+
+                h1{
+                    color:#0f766e;
+                }
+
+                .line{
+                    border-bottom:1px solid #ddd;
+                    margin:25px 0;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>عيادة الطبيب قرناش</h1>
+
+            <p>طبيب عام</p>
+
+            <div class="line"></div>
+
+            <h2>وصفة طبية</h2>
+
+            <p>
+                <strong>المريض:</strong>
+                ${escapeHTML(p.patientName)}
+            </p>
+
+            <p>
+                <strong>التاريخ:</strong>
+                ${p.date}
+            </p>
+
+            <div class="line"></div>
+
+            <h3>الأدوية والتعليمات:</h3>
+
+            <p style="white-space:pre-line">
+                ${escapeHTML(p.medicines)}
+            </p>
+
+            <div class="line"></div>
+
+            <p>توقيع الطبيب: __________________</p>
+
+        </body>
+
+        </html>
+    `);
+
+    w.document.close();
+    w.print();
+}
+
+
+/* ==========================
+   TESTS
+========================== */
+
+function addTest(){
+
+    const patientId =
+        Number(document.getElementById("testPatient").value);
+
+    const patient =
+        patients.find(p=>p.id===patientId);
+
+    if(!patient){
+        alert("اختر المريض");
+        return;
+    }
+
+    tests.push({
+
+        id:Date.now(),
+
+        patientName:patient.name,
+
+        type:
+            document.getElementById("testType").value,
+
+        result:
+            document.getElementById("testResult").value,
+
+        date:
+            new Date().toLocaleDateString("ar-DZ")
+    });
+
+    saveData();
+
+    closeModal("testModal");
+
+    refreshAll();
+
+    alert("تم حفظ النتيجة");
+}
+
+
+function renderTests(){
+
+    const container =
+        document.getElementById("testsList");
+
+    container.innerHTML="";
+
+    if(tests.length===0){
+
+        container.innerHTML=
+        `<p style="color:#94a3b8">
+            لا توجد تحاليل أو أشعة مسجلة.
+        </p>`;
+
+        return;
+    }
+
+    tests.forEach(t=>{
+
+        container.innerHTML += `
+
+        <div style="
+            padding:15px 0;
+            border-bottom:1px solid #eef2f5;
+        ">
+
+            <strong style="color:#16323f">
+                ${escapeHTML(t.patientName)}
+            </strong>
+
+            <span class="badge orange">
+                ${t.type}
+            </span>
+
+            <p style="
+                margin-top:8px;
+                color:#64748b;
+                font-size:12px;
+                white-space:pre-line;
+            ">
+                ${escapeHTML(t.result || "لا توجد ملاحظات")}
+            </p>
+
+            <small style="color:#94a3b8">
+                ${t.date}
+            </small>
+
+        </div>`;
+    });
+}
+
+
+/* ==========================
+   CONSULTATION
+========================== */
+
+function saveConsultation(){
+
+    const patientId =
+        Number(document.getElementById("consultPatient").value);
+
+    const patient =
+        patients.find(p=>p.id===patientId);
+
+    if(!patient){
+        alert("اختر المريض");
+        return;
+    }
+
+    consultations.push({
+
+        id:Date.now(),
+
+        patientName:patient.name,
+
+        date:
+            document.getElementById("consultDate").value
+            || new Date().toISOString().split("T")[0]
+    });
+
+    patient.lastVisit =
+        new Date().toLocaleDateString("ar-DZ");
+
+    saveData();
+
+    refreshAll();
+
+    alert("تم حفظ الاستشارة بنجاح");
+}
+
+
+/* ==========================
+   SELECTS
+========================== */
+
+function updatePatientSelects(){
+
+    const ids = [
+        "appointmentPatient",
+        "prescriptionPatient",
+        "testPatient",
+        "consultPatient"
+    ];
+
+    ids.forEach(id=>{
+
+        const select =
+            document.getElementById(id);
+
+        if(!select) return;
+
+        const old =
+            select.value;
+
+        select.innerHTML =
+            `<option value="">اختر المريض</option>`;
+
+        patients.forEach(p=>{
+
+            select.innerHTML += `
+                <option value="${p.id}">
+                    ${escapeHTML(p.name)}
+                </option>`;
+        });
+
+        if(old)
+            select.value=old;
+    });
+}
+
+
+/* ==========================
+   STATISTICS
+========================== */
+
+function updateStats(){
+
+    document.getElementById("patientsCount")
+        .textContent=patients.length;
+
+    document.getElementById("appointmentsCount")
+        .textContent=appointments.length;
+
+    document.getElementById("consultationsCount")
+        .textContent=consultations.length;
+
+    document.getElementById("prescriptionsCount")
+        .textContent=prescriptions.length;
+
+    document.getElementById("reportPatients")
+        .textContent=patients.length;
+
+    document.getElementById("reportConsultations")
+        .textContent=consultations.length;
+
+    document.getElementById("reportPrescriptions")
+        .textContent=prescriptions.length;
+
+    document.getElementById("reportTests")
+        .textContent=tests.length;
+}
+
+
+/* ==========================
+   STORAGE
+========================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        "qarnaash_patients",
+        JSON.stringify(patients)
+    );
+
+    localStorage.setItem(
+        "qarnaash_appointments",
+        JSON.stringify(appointments)
+    );
+
+    localStorage.setItem(
+        "qarnaash_prescriptions",
+        JSON.stringify(prescriptions)
+    );
+
+    localStorage.setItem(
+        "qarnaash_consultations",
+        JSON.stringify(consultations)
+    );
+
+    localStorage.setItem(
+        "qarnaash_tests",
+        JSON.stringify(tests)
+    );
+}
+
+
+/* ==========================
+   SETTINGS
+========================== */
+
+function saveSettings(){
+
+    alert("تم حفظ إعدادات العيادة");
+}
+
+
+/* ==========================
+   UTILITIES
+========================== */
+
+function escapeHTML(value){
+
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function setDates(){
+
+    const today =
+        new Date();
+
+    document.getElementById("todayDate")
+        .textContent =
+        today.toLocaleDateString(
+            "ar-DZ",
+            {
+                weekday:"long",
+                day:"numeric",
+                month:"long"
+            }
+        );
+
+    const iso =
+        today.toISOString().split("T")[0];
+
+    const fields = [
+        "appointmentDate",
+        "prescriptionDate",
+        "consultDate"
+    ];
+
+    fields.forEach(id=>{
+        const el=document.getElementById(id);
+
+        if(el && !el.value)
+            el.value=iso;
+    });
+}
+
+
+function refreshAll(){
+
+    renderPatients();
+
+    renderAppointments();
+
+    renderDashboardAppointments();
+
+    renderPrescriptions();
+
+    renderTests();
+
+    updatePatientSelects();
+
+    updateStats();
+}
+
+
+/* ==========================
+   INITIALIZATION
+========================== */
+
+setDates();
+
+refreshAll();
+
+</script>
+
+</body>
+</html>
